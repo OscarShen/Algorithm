@@ -71,7 +71,12 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	}
 
 	private BinaryNode<E> findMin(BinaryNode<E> root) {
-		return null;
+		if (root != null) {
+			while (root.left != null) {
+				root = root.left;
+			}
+		}
+		return root;
 	}
 
 	/**
@@ -87,8 +92,13 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 		return findMax(root).element;
 	}
 
-	private BinaryNode<E> findMax(BinaryNode<E> root2) {
-		return null;
+	private BinaryNode<E> findMax(BinaryNode<E> root) {
+		if (root != null) {
+			while (root.right != null) {
+				root = root.right;
+			}
+		}
+		return root;
 	}
 
 	/**
@@ -101,7 +111,20 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	}
 
 	private BinaryNode<E> insert(E element, BinaryNode<E> root) {
-		return null;
+		if (root == null) {
+			return new BinaryNode<E>(element, null, null);
+		}
+
+		int compareResult = element.compareTo(root.element);
+		if (compareResult < 0) {
+			root.left = insert(element, root.left);
+		} else if (compareResult > 0) {
+			root.right = insert(element, root.right);
+		} else {
+			;
+		}
+
+		return root;
 	}
 
 	/**
@@ -113,8 +136,23 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 		root = remove(element, root);
 	}
 
-	private BinaryNode<E> remove(E element, BinaryNode<E> root2) {
-		return null;
+	private BinaryNode<E> remove(E element, BinaryNode<E> root) {
+		if (root == null) {
+			return root;
+		}
+		int compareResult = element.compareTo(root.element);
+
+		if (compareResult < 0) {
+			root.left = remove(element, root.left);
+		} else if (compareResult > 0) {
+			root.right = remove(element, root.right);
+		} else if (root.left != null && root.right != null) {
+			root.element = findMin(root.right).element;
+			root.right = remove(root.element, root.right);
+		} else {
+			root = (root.left != null) ? root.left : root.right;
+		}
+		return root;
 	}
 
 	/**
