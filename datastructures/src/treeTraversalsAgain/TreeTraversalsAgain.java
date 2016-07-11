@@ -5,7 +5,8 @@ import java.util.Stack;
 
 public class TreeTraversalsAgain {
 
-	public String[] record() {
+	public String[] record() { 
+		
 		Scanner s = new Scanner(System.in);
 		int n = s.nextInt();
 		String[] input = new String[2 * n];
@@ -34,7 +35,6 @@ public class TreeTraversalsAgain {
 					stack.push(temp);
 				}
 			} else {
-				stack.pop();
 			}
 		}
 		return null;
