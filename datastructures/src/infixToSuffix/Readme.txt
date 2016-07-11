@@ -1,0 +1,1 @@
+convert infix to suffix for computing simple figures.
