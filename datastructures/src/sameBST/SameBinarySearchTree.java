@@ -3,7 +3,7 @@ package sameBST;
 import java.util.Scanner;
 
 /**
- * 判断是否同一棵二叉搜索树（建一棵树的方法）
+ * 判断是否同一棵二叉搜索树（建两棵树的方法）
  * 
  * @author ruiyao.shen
  *
@@ -28,78 +28,33 @@ public class SameBinarySearchTree {
 			l = s.nextInt();
 			tree = makeTree(n);
 			for (int i = 0; i < l; i++) {
-				if (judge(tree, n))
+				TreeNode tree1 = makeTree(n);
+				boolean isSame = checkSame(tree, tree1);
+				if (isSame) {
 					System.out.println("Yes");
-				else
+				} else {
 					System.out.println("No");
-				resetTree(tree);
+				}
 			}
 			n = s.nextInt();
 		}
 	}
 
 	/**
-	 * 清除各节点的flag标记
+	 * 判断两棵树是否相同
 	 * 
 	 * @param tree
-	 */
-	private void resetTree(TreeNode tree) {
-		if (tree.left != null) {
-			resetTree(tree.left);
-		}
-		if (tree.right != null) {
-			resetTree(tree.right);
-		}
-		tree.flag = false;
-	}
-
-	/**
-	 * 判别两棵树是否相同
-	 * 
-	 * 发现序列中某个数与T不一致时，必须把后面的数字全部读完！！
-	 * 
-	 * @param tree
-	 * @param n
+	 * @param tree1
 	 * @return
 	 */
-	private boolean judge(TreeNode tree, int n) {
-		int val;
-		boolean flag = true;// 用来表示是否一致，true目前为一致
-		val = s.nextInt();
-		if (val != tree.val)
-			flag = false;
-		else
-			tree.flag = true;
-
-		for (int i = 1; i < n; i++) {
-			val = s.nextInt();
-			if (flag && !check(tree, val))
-				flag = false;
+	private boolean checkSame(TreeNode tree, TreeNode tree1) {
+		if (tree == null || tree1 == null) {
+			return tree == null && tree1 == null;
 		}
-		return flag;
-	}
-
-	/**
-	 * 检查是否经过相同的路径
-	 * 
-	 * @param tree
-	 * @param val
-	 * @return
-	 */
-	private boolean check(TreeNode tree, int val) {
-		if (tree.flag) {
-			if (val < tree.val)
-				return check(tree.left, val);
-			else if (val > tree.val)
-				return check(tree.right, val);
-			else
-				return false;
+		if (tree.val == tree1.val) {
+			return checkSame(tree.left, tree1.left) && checkSame(tree.right, tree1.right);
 		} else {
-			if (val == tree.val) {
-				tree.flag = true;
-				return true;
-			} else
-				return false;
+			return false;
 		}
 	}
 
