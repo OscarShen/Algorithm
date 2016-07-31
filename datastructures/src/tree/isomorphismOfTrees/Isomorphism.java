@@ -1,4 +1,4 @@
-package isomorphismOfTrees;
+package tree.isomorphismOfTrees;
 
 import java.util.Scanner;
 

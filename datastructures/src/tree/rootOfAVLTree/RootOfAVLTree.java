@@ -1,4 +1,4 @@
-package rootOfAVLTree;
+package tree.rootOfAVLTree;
 
 import java.util.Scanner;
 

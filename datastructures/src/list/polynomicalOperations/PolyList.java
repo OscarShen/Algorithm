@@ -1,4 +1,4 @@
-package polynomicalOperations;
+package list.polynomicalOperations;
 
 import utils.PolyNode;
 

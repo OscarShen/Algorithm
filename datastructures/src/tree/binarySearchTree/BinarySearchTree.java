@@ -1,4 +1,4 @@
-package binarySearchTree;
+package tree.binarySearchTree;
 
 /**
  * 二叉搜索树

@@ -1,4 +1,4 @@
-package isomorphismOfTrees;
+package tree.isomorphismOfTrees;
 
 public class TreeNode {
 	String element;

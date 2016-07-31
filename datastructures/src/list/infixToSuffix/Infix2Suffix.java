@@ -1,4 +1,4 @@
-package infixToSuffix;
+package list.infixToSuffix;
 
 import java.util.ArrayList;
 import java.util.List;

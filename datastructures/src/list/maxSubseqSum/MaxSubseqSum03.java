@@ -1,4 +1,4 @@
-package maxSubseqSum;
+package list.maxSubseqSum;
 
 /**
  * Online processing algorithm

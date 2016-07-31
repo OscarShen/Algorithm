@@ -1,4 +1,4 @@
-package completeBinarySearchTree;
+package tree.completeBinarySearchTree;
 
 import java.util.Arrays;
 import java.util.Scanner;

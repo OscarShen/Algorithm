@@ -1,4 +1,4 @@
-package sameBST;
+package tree.sameBST;
 
 public class TreeNode {
 	int val;

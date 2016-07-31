@@ -1,4 +1,4 @@
-package reverseLinkedList;
+package list.reverseLinkedList;
 
 import java.util.Scanner;
 

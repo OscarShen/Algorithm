@@ -1,4 +1,4 @@
-package treeTraversalsAgain;
+package tree.treeTraversalsAgain;
 
 import java.util.Scanner;
 import java.util.Stack;

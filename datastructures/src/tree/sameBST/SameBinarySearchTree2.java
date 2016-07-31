@@ -1,4 +1,4 @@
-package sameBST;
+package tree.sameBST;
 
 import java.util.Scanner;
 

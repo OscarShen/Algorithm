@@ -1,4 +1,4 @@
-package maxSubseqSum;
+package list.maxSubseqSum;
 
 /**
  * Two exhaustive attack methods. Time complexity is O(n3) and O(n2).

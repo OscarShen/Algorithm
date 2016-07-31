@@ -1,4 +1,4 @@
-package maxSubseqSum;
+package list.maxSubseqSum;
 
 /**
  * divide-and-conquer
