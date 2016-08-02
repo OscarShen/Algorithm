@@ -21,10 +21,27 @@ public class BinaryHeap<T extends Comparable<? super T>> {
         array = (T[]) new Comparable[ capacity + 1 ];
     }
 	
+	@SuppressWarnings("unchecked")
 	public BinaryHeap(T[] items) {
+		currentSize = items.length;
+		array = (T[]) new Comparable[(currentSize+2)*11/10];
 		
+		int i = 1;
+		for(T item :items){
+			array[i++] = item;
+		}
+		buildHeap();
 	}
 	
+	/**
+	 * 为堆进行排序，时间复杂度是线性的 
+	 */
+	private void buildHeap() {
+		for(int i = currentSize / 2; i > 0;i--){
+			percolateDown(i);
+		}
+	}
+
 	/**
 	 * 在保持堆序的情况下，插入一个元素到优先队列中
 	 * @param item 要插入的元素
