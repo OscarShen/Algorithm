@@ -12,10 +12,8 @@ public class JosephusProblem2 {
 	/**
 	 * 使用循环链表解决问题
 	 * 
-	 * @param m
-	 *            传递的次数
-	 * @param n
-	 *            可传递的总个数
+	 * @param m 传递的次数
+	 * @param n 可传递的总个数
 	 */
 	public void solve(int m, int n) {
 		Node preHead = new Node(Integer.MAX_VALUE);
@@ -36,7 +34,7 @@ public class JosephusProblem2 {
 				preCur = preCur.next;
 				count++;
 			}
-			System.out.println(cur.element);
+			System.out.print(cur.element+"\t");
 			preCur.next = cur.next;
 			cur = cur.next;
 			out++;
