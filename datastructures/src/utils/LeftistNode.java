@@ -1,19 +1,20 @@
 package utils;
 
-public class TreeNode<E> {
-	E element;
-	TreeNode<E> left;
-	TreeNode<E> right;
+public class LeftistNode<T> {
+	public T element;
+	public LeftistNode<T> left;
+	public LeftistNode<T> right;
+	public int npl;				//零路径长度
 
-	public TreeNode() {
-		this.element = null;
-		this.left = null;
-		this.right = null;
-	}
+	public LeftistNode() {}
 
-	public TreeNode(E element) {
+	public LeftistNode(T element) {
 		this.element = element;
-		left = null;
-		right = null;
+	}
+	
+	public LeftistNode(T element, LeftistNode<T> left, LeftistNode<T> right){
+		this.element = element;
+		this.left = left;
+		this.right = right;
 	}
 }
