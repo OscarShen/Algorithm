@@ -15,31 +15,18 @@ public class SortUtils {
 	 * @param arr
 	 */
 	public static <T extends Comparable<? super T>> void bubbleSort(T[] arr) {
-		bubbleSort(arr, 0, arr.length);
-	}
-
-	/**
-	 * 冒泡排序
-	 * 
-	 * @param arr
-	 * @param begin
-	 * @param end
-	 */
-	public static <T extends Comparable<? super T>> void bubbleSort(T[] arr, int begin, int end) {
-		if (begin < 0 || end > arr.length)
-			throw new ArrayIndexOutOfBoundsException();
-		for (int i = begin; i < end; i++) {
-			boolean flag = false; // 表示一次遍历是否改变过位置
-			for (int j = end - 1; j > i; j--) {
+		for (int i = 0; i < arr.length; i++) {
+			boolean flag = false;// false表示未执行交换
+			for (int j = arr.length - 1; j > i; j--) {
 				if (arr[j].compareTo(arr[j - 1]) < 0) {
-					T t = arr[j - 1];
-					arr[j - 1] = arr[j];
-					arr[j] = t;
+					T tmp = arr[j];
+					arr[j] = arr[j - 1];
+					arr[j - 1] = tmp;
 					flag = true;
 				}
 			}
 			if (!flag)
-				return;
+				break;
 		}
 	}
 
@@ -49,20 +36,9 @@ public class SortUtils {
 	 * @param arr
 	 */
 	public static <T extends Comparable<? super T>> void insertionSort(T[] arr) {
-		insertionSort(arr, 0, arr.length);
-	}
-
-	/**
-	 * 插入排序
-	 * 
-	 * @param arr
-	 * @param begin
-	 * @param end
-	 */
-	public static <T extends Comparable<? super T>> void insertionSort(T[] arr, int begin, int end) {
-		int j;
-		for (int i = begin; i < end; i++) {
+		for (int i = 1; i < arr.length; i++) {
 			T tmp = arr[i];
+			int j;
 			for (j = i; j > 0 && tmp.compareTo(arr[j - 1]) < 0; j--)
 				arr[j] = arr[j - 1];
 			arr[j] = tmp;
@@ -75,24 +51,12 @@ public class SortUtils {
 	 * @param arr
 	 */
 	public static <T extends Comparable<? super T>> void shellSort(T[] arr) {
-		shellSort(arr, 0, arr.length);
-	}
-
-	/**
-	 * 希尔排序
-	 * 
-	 * @param arr
-	 * @param begin
-	 * @param end
-	 */
-	public static <T extends Comparable<? super T>> void shellSort(T[] arr, int begin, int end) {
-		int j;
-		for (int gap = (end - begin) / 2; gap > 0; gap /= 2) {
+		for (int gap = arr.length / 2; gap > 0; gap /= 2) {
 			for (int i = gap; i < arr.length; i++) {
 				T tmp = arr[i];
-				for (j = i; j >= gap && tmp.compareTo(arr[j - gap]) < 0; j -= gap) {
+				int j;
+				for (j = i; j >= gap && tmp.compareTo(arr[j - gap]) < 0; j -= gap)
 					arr[j] = arr[j - gap];
-				}
 				arr[j] = tmp;
 			}
 		}
@@ -104,63 +68,53 @@ public class SortUtils {
 	 * @param arr
 	 */
 	public static <T extends Comparable<? super T>> void heapSort(T[] arr) {
-		heapSort(arr, 0, arr.length);
-	}
-
-	/**
-	 * 堆排序
-	 * 
-	 * @param arr
-	 * @param begin
-	 * @param end
-	 */
-	public static <T extends Comparable<? super T>> void heapSort(T[] arr, int begin, int end) {
-		int n = end - begin;
-		for (int i = n / 2; i >= 0; i--)
-			percDown(arr, i, n);
-		for (int i = n - 1; i > 0; i--) {
+		for (int i = arr.length / 2; i >= 0; i--)
+			percDown(arr, i, arr.length);
+		for (int i = arr.length - 1; i > 0; i--) {
 			swapReferences(arr, 0, i);
 			percDown(arr, 0, i);
 		}
 	}
 
 	/**
-	 * 交换当前最大值与最后一个位置
+	 * 交换数组中i与j位置的元素
 	 * 
 	 * @param arr
-	 * @param deletedIndex
-	 * @param position
+	 * @param i
+	 * @param j
 	 */
-	private static <T extends Comparable<? super T>> void swapReferences(T[] arr, int deletedIndex, int position) {
-		T tmp = arr[0];
-		arr[0] = arr[position];
-		arr[position] = tmp;
+	private static <T extends Comparable<? super T>> void swapReferences(T[] arr, int i, int j) {
+		T tmp = arr[j];
+		arr[j] = arr[i];
+		arr[i] = tmp;
 	}
 
 	/**
-	 * 堆的下滤
+	 * 将顶端元素下滤
 	 * 
 	 * @param arr
-	 * @param begin
-	 * @param end
+	 * @param i
+	 *            需要下滤元素的序号
+	 * @param length
+	 *            当前可移动的元素总数
 	 */
-	private static <T extends Comparable<? super T>> void percDown(T[] arr, int begin, int end) {
-		int child;
+	private static <T extends Comparable<? super T>> void percDown(T[] arr, int i, int length) {
 		T tmp;
-		for (tmp = arr[begin]; leftChild(begin) < end; begin = child) {
-			child = leftChild(begin);
-			if (child != end - 1 && arr[child].compareTo(arr[child + 1]) < 0)
+		int child;
+		for (tmp = arr[i]; leftChild(i) < length; i = child) {
+			child = leftChild(i);
+			if (child != length - 1 && arr[child].compareTo(arr[child + 1]) < 0)
 				child++;
 			if (tmp.compareTo(arr[child]) < 0)
-				arr[begin] = arr[child];
+				arr[i] = arr[child];
 			else
 				break;
 		}
-		arr[begin] = tmp;
+		arr[i] = tmp;
 	}
 
 	/**
-	 * 左儿子序号(数组从零开始计算)
+	 * 求出初始为0二叉树的左儿子序号
 	 * 
 	 * @param i
 	 * @return
@@ -175,24 +129,13 @@ public class SortUtils {
 	 * @param arr
 	 */
 	public static <T extends Comparable<? super T>> void mergeSort(T[] arr) {
-		mergeSort(arr, 0, arr.length);
-	}
-
-	/**
-	 * 归并排序
-	 * 
-	 * @param arr
-	 * @param begin
-	 * @param end
-	 */
-	public static <T extends Comparable<? super T>> void mergeSort(T[] arr, int begin, int end) {
 		@SuppressWarnings("unchecked")
 		T[] tmp = (T[]) new Comparable[arr.length];
-		mergeSort(arr, tmp, 0, end - 1);
+		mergeSort(arr, tmp, 0, arr.length - 1);
 	}
 
 	/**
-	 * 归并排序驱动程序，创建一个空的数组
+	 * 递归程序
 	 * 
 	 * @param arr
 	 * @param tmp
@@ -209,7 +152,7 @@ public class SortUtils {
 	}
 
 	/**
-	 * 合并已经排序好的数组
+	 * 合并
 	 * 
 	 * @param arr
 	 * @param tmp
@@ -221,10 +164,9 @@ public class SortUtils {
 			int rightEnd) {
 		int leftEnd = rightPos - 1;
 		int cur = leftPos;
-		int count = rightEnd - leftPos + 1;
-
+		int n = rightEnd - leftPos + 1;
 		while (leftPos <= leftEnd && rightPos <= rightEnd) {
-			if (arr[leftPos].compareTo(arr[rightPos]) <= 0)
+			if (arr[leftPos].compareTo(arr[rightPos]) < 0)
 				tmp[cur++] = arr[leftPos++];
 			else
 				tmp[cur++] = arr[rightPos++];
@@ -235,14 +177,22 @@ public class SortUtils {
 		while (rightPos <= rightEnd)
 			tmp[cur++] = arr[rightPos++];
 
-		for (int i = 0; i < count; i++, rightEnd--)
+		for (int i = 0; i < n; i++, rightEnd--)
 			arr[rightEnd] = tmp[rightEnd];
+	}
+
+	/**
+	 * 快速排序
+	 * 
+	 * @param arr
+	 */
+	public static <T extends Comparable<? super T>> void quickSort(T[] arr) {
 	}
 
 	@Test
 	public void test() {
 		Integer[] arr = { 3, 2, 4, 5, 1, 1, 4, 5, 54, 2, 34, 1, 3, 6 };
-		heapSort(arr);
+		mergeSort(arr);
 		for (Integer i : arr) {
 			System.out.print(i + "\t");
 		}
