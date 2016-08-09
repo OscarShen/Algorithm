@@ -100,6 +100,7 @@ public class SortUtils {
 
 	/**
 	 * 堆排序
+	 * 
 	 * @param arr
 	 */
 	public static <T extends Comparable<? super T>> void heapSort(T[] arr) {
@@ -108,6 +109,7 @@ public class SortUtils {
 
 	/**
 	 * 堆排序
+	 * 
 	 * @param arr
 	 * @param begin
 	 * @param end
@@ -124,6 +126,7 @@ public class SortUtils {
 
 	/**
 	 * 交换当前最大值与最后一个位置
+	 * 
 	 * @param arr
 	 * @param deletedIndex
 	 * @param position
@@ -136,35 +139,105 @@ public class SortUtils {
 
 	/**
 	 * 堆的下滤
+	 * 
 	 * @param arr
-	 * @param left
-	 * @param right
+	 * @param begin
+	 * @param end
 	 */
-	private static <T extends Comparable<? super T>> void percDown(T[] arr, int left, int right) {
+	private static <T extends Comparable<? super T>> void percDown(T[] arr, int begin, int end) {
 		int child;
 		T tmp;
-		for (tmp = arr[left]; leftChild(left) < right; left = child) {
-			child = leftChild(left);
-			if (child != right - 1 && arr[child].compareTo(arr[child + 1]) < 0)
+		for (tmp = arr[begin]; leftChild(begin) < end; begin = child) {
+			child = leftChild(begin);
+			if (child != end - 1 && arr[child].compareTo(arr[child + 1]) < 0)
 				child++;
 			if (tmp.compareTo(arr[child]) < 0)
-				arr[left] = arr[child];
+				arr[begin] = arr[child];
 			else
 				break;
 		}
-		arr[left] = tmp;
+		arr[begin] = tmp;
 	}
 
 	/**
-	 * 从0开始数组的左儿子序号
+	 * 左儿子序号(数组从零开始计算)
+	 * 
 	 * @param i
 	 * @return
 	 */
 	private static int leftChild(int i) {
 		return 2 * i + 1;
 	}
-	
-	
+
+	/**
+	 * 归并排序
+	 * 
+	 * @param arr
+	 */
+	public static <T extends Comparable<? super T>> void mergeSort(T[] arr) {
+		mergeSort(arr, 0, arr.length);
+	}
+
+	/**
+	 * 归并排序
+	 * 
+	 * @param arr
+	 * @param begin
+	 * @param end
+	 */
+	public static <T extends Comparable<? super T>> void mergeSort(T[] arr, int begin, int end) {
+		@SuppressWarnings("unchecked")
+		T[] tmp = (T[]) new Comparable[arr.length];
+		mergeSort(arr, tmp, 0, end - 1);
+	}
+
+	/**
+	 * 归并排序驱动程序，创建一个空的数组
+	 * 
+	 * @param arr
+	 * @param tmp
+	 * @param left
+	 * @param right
+	 */
+	private static <T extends Comparable<? super T>> void mergeSort(T[] arr, T[] tmp, int left, int right) {
+		if (left < right) {
+			int center = (left + right) / 2;
+			mergeSort(arr, tmp, left, center);
+			mergeSort(arr, tmp, center + 1, right);
+			merge(arr, tmp, left, center + 1, right);
+		}
+	}
+
+	/**
+	 * 合并已经排序好的数组
+	 * 
+	 * @param arr
+	 * @param tmp
+	 * @param leftPos
+	 * @param rightPos
+	 * @param rightEnd
+	 */
+	private static <T extends Comparable<? super T>> void merge(T[] arr, T[] tmp, int leftPos, int rightPos,
+			int rightEnd) {
+		int leftEnd = rightPos - 1;
+		int cur = leftPos;
+		int count = rightEnd - leftPos + 1;
+
+		while (leftPos <= leftEnd && rightPos <= rightEnd) {
+			if (arr[leftPos].compareTo(arr[rightPos]) <= 0)
+				tmp[cur++] = arr[leftPos++];
+			else
+				tmp[cur++] = arr[rightPos++];
+		}
+
+		while (leftPos <= leftEnd)
+			tmp[cur++] = arr[leftPos++];
+		while (rightPos <= rightEnd)
+			tmp[cur++] = arr[rightPos++];
+
+		for (int i = 0; i < count; i++, rightEnd--)
+			arr[rightEnd] = tmp[rightEnd];
+	}
 
 	@Test
 	public void test() {
