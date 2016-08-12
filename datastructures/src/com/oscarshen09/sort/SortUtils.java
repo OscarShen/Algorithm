@@ -36,10 +36,21 @@ public class SortUtils {
 	 * @param arr
 	 */
 	public static <T extends Comparable<? super T>> void insertionSort(T[] arr) {
-		for (int i = 1; i < arr.length; i++) {
+		insertionSort(arr, 0, arr.length - 1);
+	}
+
+	/**
+	 * 插入排序
+	 * 
+	 * @param arr
+	 * @param left
+	 * @param right
+	 */
+	public static <T extends Comparable<? super T>> void insertionSort(T[] arr, int left, int right) {
+		for (int i = left + 1; i <= right; i++) {
 			T tmp = arr[i];
 			int j;
-			for (j = i; j > 0 && tmp.compareTo(arr[j - 1]) < 0; j--)
+			for (j = i; j > left && tmp.compareTo(arr[j - 1]) < 0; j--)
 				arr[j] = arr[j - 1];
 			arr[j] = tmp;
 		}
@@ -135,7 +146,7 @@ public class SortUtils {
 	}
 
 	/**
-	 * 递归程序
+	 * 归并排序递归程序
 	 * 
 	 * @param arr
 	 * @param tmp
@@ -182,17 +193,76 @@ public class SortUtils {
 	}
 
 	/**
+	 * 快排中使用插入排序的阈值
+	 */
+	private static final int CUTOFF = 10;
+
+	/**
 	 * 快速排序
 	 * 
 	 * @param arr
 	 */
 	public static <T extends Comparable<? super T>> void quickSort(T[] arr) {
+		quickSort(arr, 0, arr.length - 1);
+	}
+
+	/**
+	 * 快速排序递归程序
+	 * 
+	 * @param arr
+	 * @param left
+	 * @param right
+	 */
+	private static <T extends Comparable<? super T>> void quickSort(T[] arr, int left, int right) {
+		if (CUTOFF + left <= right) {
+			T pivot = median3(arr, left, right);
+
+			int i = left, j = right - 1;
+			for (;;) {
+				while (arr[++i].compareTo(pivot) < 0) {
+				}
+				while (arr[--j].compareTo(pivot) > 0) {
+				}
+				if (i < j)
+					swapReferences(arr, i, j);
+				else
+					break;
+			}
+
+			swapReferences(arr, i, right - 1);
+			quickSort(arr, left, i - 1);
+			quickSort(arr, i + 1, right);
+		} else
+			insertionSort(arr, left, right);
+
+	}
+
+	/**
+	 * 三数取中值
+	 * 
+	 * @param arr
+	 * @param left
+	 * @param right
+	 * @return
+	 */
+	private static <T extends Comparable<? super T>> T median3(T[] arr, int left, int right) {
+		int center = (left + right) / 2;
+		if (arr[center].compareTo(arr[left]) < 0)
+			swapReferences(arr, left, center);
+		if (arr[right].compareTo(arr[left]) < 0)
+			swapReferences(arr, left, right);
+		if (arr[right].compareTo(arr[center]) < 0)
+			swapReferences(arr, center, right);
+
+		// 将枢纽元与arr[right-1]交换
+		swapReferences(arr, center, right - 1);
+		return arr[right - 1];
 	}
 
 	@Test
 	public void test() {
 		Integer[] arr = { 3, 2, 4, 5, 1, 1, 4, 5, 54, 2, 34, 1, 3, 6 };
-		mergeSort(arr);
+		quickSort(arr);
 		for (Integer i : arr) {
 			System.out.print(i + "\t");
 		}
