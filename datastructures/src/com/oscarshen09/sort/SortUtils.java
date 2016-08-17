@@ -1,7 +1,5 @@
 package com.oscarshen09.sort;
 
-import org.junit.Test;
-
 /**
  * 各种排序方法
  * 
@@ -104,10 +102,8 @@ public class SortUtils {
 	 * 将顶端元素下滤
 	 * 
 	 * @param arr
-	 * @param i
-	 *            需要下滤元素的序号
-	 * @param length
-	 *            当前可移动的元素总数
+	 * @param i 需要下滤元素的序号
+	 * @param length 当前可移动的元素总数
 	 */
 	private static <T extends Comparable<? super T>> void percDown(T[] arr, int i, int length) {
 		T tmp;
@@ -259,12 +255,31 @@ public class SortUtils {
 		return arr[right - 1];
 	}
 
-	@Test
-	public void test() {
-		Integer[] arr = { 3, 2, 4, 5, 1, 1, 4, 5, 54, 2, 34, 1, 3, 6 };
-		quickSort(arr);
-		for (Integer i : arr) {
-			System.out.print(i + "\t");
-		}
+	public static <T extends Comparable<? super T>> void quickSelect(T[] arr, int k) {
+		quickSelect(arr, 0, arr.length - 1, k);
+	}
+
+	private static <T extends Comparable<? super T>> void quickSelect(T[] arr, int left, int right, int k) {
+		if (CUTOFF + left <= right) {
+			T pivot = median3(arr, left, right);
+			int i = left, j = right - 1;
+			for (;;) {
+				while (arr[++i].compareTo(pivot) < 0) {
+				}
+				while (arr[--j].compareTo(pivot) > 0) {
+				}
+				if (i < j)
+					swapReferences(arr, i, j);
+				else
+					break;
+			}
+			swapReferences(arr, i, right - 1);
+
+			if (k <= i)
+				quickSelect(arr, left, i - 1, k);
+			else if (k > i + 1)
+				quickSelect(arr, i + 1, right, k);
+		} else
+			insertionSort(arr, left, right);
 	}
 }
