@@ -255,6 +255,12 @@ public class SortUtils {
 		return arr[right - 1];
 	}
 
+	/**
+	 * 将第k小的元素放在k-1的位置上
+	 * 
+	 * @param arr
+	 * @param k
+	 */
 	public static <T extends Comparable<? super T>> void quickSelect(T[] arr, int k) {
 		quickSelect(arr, 0, arr.length - 1, k);
 	}
