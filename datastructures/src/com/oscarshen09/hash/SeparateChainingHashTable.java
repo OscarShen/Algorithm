@@ -1,4 +1,4 @@
-package com.oscarshen09.hashTable;
+package com.oscarshen09.hash;
 
 import java.util.LinkedList;
 import java.util.List;
