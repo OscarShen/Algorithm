@@ -17,4 +17,14 @@ public class LeftistNode<T> {
 		this.left = left;
 		this.right = right;
 	}
+
+	public T getElement() {
+		return element;
+	}
+
+	public void setElement(T element) {
+		this.element = element;
+	}
+	
+	
 }

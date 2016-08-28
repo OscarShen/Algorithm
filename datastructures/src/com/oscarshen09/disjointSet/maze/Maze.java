@@ -19,7 +19,7 @@ public class Maze extends JPanel {
 	private int width = -1;// 每个格子(Lattice)的宽度
 	private int ballX = 0, ballY = 0;// 用来记录球的位置
 	private boolean drawPath = false;// 记录是否画出路线
-
+ 
 	public Maze(int num, int padding, int width) {
 		this.num = num;
 		this.padding = padding;
