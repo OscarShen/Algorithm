@@ -1,6 +1,5 @@
 #include <vector>
 #include <iostream>
-#include "Sort.h"
 using namespace std;
 
 void insertionSort(vector<int> &v) {
@@ -51,12 +50,4 @@ void merge(vector<int>& v, vector<int>& tmp, int leftBegin, int rightBegin, int 
 	}
 	for (int i = 0; i < n; i++, --rightEnd)
 		v[rightEnd] = tmp[rightEnd];
-}
-
-int main() {
-	vector<int> v{ 2,1,3,5,3,2,5,72,7 };
-	mergeSort(v);
-	for (auto i : v)
-		cout << i << " ";
-	cout << endl;
 }
