@@ -1,5 +1,7 @@
 #include <vector>
 #include <iostream>
+#include "Sort.h"
+#include "../heap/Heap.h"
 using namespace std;
 
 void insertionSort(vector<int> &v) {
@@ -50,4 +52,57 @@ void merge(vector<int>& v, vector<int>& tmp, int leftBegin, int rightBegin, int 
 	}
 	for (int i = 0; i < n; i++, --rightEnd)
 		v[rightEnd] = tmp[rightEnd];
+}
+
+// Prototype of quick_pure
+void quickRecur(vector<int>& v, int left, int right);
+
+// Pure quik-sort
+void quick_pure(vector<int>& v) {
+	quickRecur(v, 0, v.size() - 1);
+}
+
+void swap_q(int& i, int& j) {
+	int temp = std::move(i);
+	i = std::move(j);
+	j = std::move(temp);
+}
+
+void quickRecur(vector<int>& v, int left, int right) {
+	if (left >= right)
+		return;
+	int pivot = v[left];
+	int i = left, j = right;
+	while (true) {
+		while (v[i] <= pivot) {
+			++i;
+			if (i >= j)
+				break;
+		}
+		while (v[j] >= pivot) {
+			--j;
+			if (i >= j)
+				break;
+		}
+		if (i < j)
+			swap_q(v[i], v[j]);
+		else {
+			swap_q(v[left], v[i-1]);
+			break;
+		}
+	}
+	quickRecur(v, left, i-1);
+	quickRecur(v, i, right);
+}
+
+// Heap Sort
+void heapSort(vector<int>& v)
+{
+	for (int i = v.size() / 2; i >= 0; --i) {
+		heap_algo::percolate_down(v, i, v.size());
+	}
+	for (int i = v.size() - 1; i > 0; --i) {
+		heap_algo::heap_swap(v[0], v[i]);
+		heap_algo::percolate_down(v, 0, i);
+	}
 }
