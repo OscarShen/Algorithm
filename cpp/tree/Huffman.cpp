@@ -49,6 +49,8 @@ vector<Node*> buildTree(vector<Node*>& v) {
 }
 // 生成编码字典
 void encode(vector<Node*>& v, int root, string& code, map<char, string>& dic) {
+	if (root == -1)
+		return;
 	if (v[root]->isLeaf()) {
 		dic[v[root]->ch] = code;
 		return;
@@ -62,24 +64,34 @@ void encode(vector<Node*>& v, int root, string& code, map<char, string>& dic) {
 	encode(v, v[root]->right, rcode, dic);
 }
 
-//int main() {
-//	cout << "请输入需要进行Huffman编码的码元个数：" << endl;
-//	int n;
-//	cin >> n;
-//	cout << "请输入" << n << "个码元及概率（权重）：" << endl;
-//	vector<Node*> v;
-//	for (int i = 0; i < n; ++i) {
-//		char ch;
-//		float weight;
-//		cin >> ch >> weight;
-//		v.push_back(new Node(-1, -1, -1, ch, weight));
-//	}
-//	vector<Node*>&& tree = buildTree(v);
-//	map<char, string> dic;
-//	encode(tree, tree.size() - 1, string("0"), dic);
-//	cout << "编码字典为：" << endl;
-//	for (auto p : dic)
-//		cout << p.first << " " << p.second << endl;
-//	v.clear();
-//	tree.clear();
-//}
+int main() {
+	cout << "请输入需要进行Huffman编码的码元个数：" << endl;
+	int n;
+	cin >> n;
+	cout << "请输入" << n << "个码元及概率（权重）：" << endl;
+	vector<Node*> v;
+	for (int i = 0; i < n; ++i) {
+		char ch;
+		float weight;
+		cin >> ch >> weight;
+		v.push_back(new Node(-1, -1, -1, ch, weight));
+	}
+	vector<Node*>&& tree = buildTree(v);
+	map<char, string> dic;
+	encode(tree, tree.size() - 1, string(""), dic);
+	cout << "编码字典为：" << endl;
+	for (auto p : dic)
+		cout << p.first << " " << p.second << endl;
+
+	cout << "请输入需要待编码数列：" << endl;
+	string code;
+	cin >> code;
+	cout << "输出比特流为：" << endl;
+	for (size_t i = 0; i < code.size(); ++i) {
+		auto it = dic.find(code[i]);
+		if (it != dic.end()) {
+			cout << dic[code[i]] << " ";
+		}
+	}
+	cout << endl;
+}
