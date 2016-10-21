@@ -4,15 +4,21 @@
 #include "../heap/Heap.h"
 using namespace std;
 
+void insertionSort(vector<int> &v, int left, int right);
 void insertionSort(vector<int> &v) {
-	int n = v.size();
-	for (int i = 1; i < n; ++i) {
-		int cur = i;
-		int temp = v[cur];
-		if (cur > 1 && v[cur] < v[cur - 1]) {
-			v[cur - 1] = v[cur];
+	insertionSort(v, 0, v.size() - 1);
+}
+
+void insertionSort(vector<int> &v, int left, int right) {
+	int cur, temp;
+	for (int i = left + 1; i <= right; ++i) {
+		cur = i;
+		temp = v[cur];
+		while (cur > left && temp < v[cur - 1]) {
+			v[cur] = v[cur - 1];
 			--cur;
 		}
+	v[cur] = temp;
 	}
 }
 
@@ -54,47 +60,6 @@ void merge(vector<int>& v, vector<int>& tmp, int leftBegin, int rightBegin, int 
 		v[rightEnd] = tmp[rightEnd];
 }
 
-// Prototype of quick_pure
-void quickRecur(vector<int>& v, int left, int right);
-
-// Pure quik-sort
-void quick_pure(vector<int>& v) {
-	quickRecur(v, 0, v.size() - 1);
-}
-
-void swap_q(int& i, int& j) {
-	int temp = std::move(i);
-	i = std::move(j);
-	j = std::move(temp);
-}
-
-void quickRecur(vector<int>& v, int left, int right) {
-	if (left >= right)
-		return;
-	int pivot = v[left];
-	int i = left, j = right;
-	while (true) {
-		while (v[i] <= pivot) {
-			++i;
-			if (i >= j)
-				break;
-		}
-		while (v[j] >= pivot) {
-			--j;
-			if (i >= j)
-				break;
-		}
-		if (i < j)
-			swap_q(v[i], v[j]);
-		else {
-			swap_q(v[left], v[i-1]);
-			break;
-		}
-	}
-	quickRecur(v, left, i-1);
-	quickRecur(v, i, right);
-}
-
 // Heap Sort
 void heapSort(vector<int>& v)
 {
@@ -105,4 +70,53 @@ void heapSort(vector<int>& v)
 		heap_algo::heap_swap(v[0], v[i]);
 		heap_algo::percolate_down(v, 0, i);
 	}
+}
+
+void swap_q(int& i, int& j) {
+	int temp = std::move(i);
+	i = std::move(j);
+	j = std::move(temp);
+}
+
+void quickSort(vector<int> &v, int left, int right);
+int median3(vector<int> &v, int left, int right);
+void quickSort(vector<int>& v)
+{
+	quickSort(v, 0, v.size() - 1);
+}
+
+static const int CUTOFF = 10;
+void quickSort(vector<int>& v, int left, int right)
+{
+	if (left + CUTOFF <= right) {
+		int&& pivot = median3(v, left, right);
+		int i = left, j = right - 1;
+		for (;;) {
+			while (v[++i] < pivot) {}
+			while (v[--j] > pivot) {}
+			if (i < j)
+				swap_q(v[i], v[j]);
+			else
+				break;
+		}
+		swap_q(v[i], v[right - 1]);
+		quickSort(v, left, i - 1);
+		quickSort(v, i + 1, right);
+	}
+	else
+		insertionSort(v, left, right);
+}
+
+int median3(vector<int>& v, int left, int right)
+{
+	int mid = (left + right) / 2;
+	if (v[mid] < v[left])
+		swap_q(v[mid], v[left]);
+	if (v[right] < v[left])
+		swap_q(v[right], v[left]);
+	if (v[right] < v[mid])
+		swap_q(v[right], v[mid]);
+
+	swap_q(v[mid], v[right - 1]);
+	return v[right - 1];
 }
