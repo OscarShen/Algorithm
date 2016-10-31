@@ -156,6 +156,7 @@ void rb_delete(rbt * tree, rbt_n * node)
 		if (temp_origin_color == RBColor::BLACK) // If origin color of temp is red, means that it does not break rules of rbt.
 			rb_delete_fixup(tree, color_fix_node);
 	}
+
 }
 
 rbt_n * rb_maximum(rbt_n * root)
@@ -170,6 +171,18 @@ rbt_n * rb_minimum(rbt_n * root)
 	while (root->left != rbt::nil)
 		root = root->left;
 	return root;
+}
+
+rbt_n * rb_find(rbt *tree, rbt_n * root, int data)
+{
+	if (root == tree->nil)
+		return tree->nil;
+	if (root->data == data)
+		return root;
+	else if (data < root->data)
+		return rb_find(tree, root->left, data);
+	else
+		return rb_find(tree, root->right, data);
 }
 
 void rb_delete_fixup(rbt * tree, rbt_n * fixNode)
@@ -234,6 +247,22 @@ void rb_delete_fixup(rbt * tree, rbt_n * fixNode)
 }
 
 
+
+void destory(rbt * tree)
+{
+	destory(tree->root);
+}
+
+void destory(rbt_n * node)
+{
+	if (node != rbt::nil) {
+		destory(node->left);
+		destory(node->right);
+		delete node;
+	}
+}
+
+
 #include <iostream>
 void dfs(rbt *tree, rbt_n *root) {
 	if (root == rbt::nil)
@@ -258,5 +287,9 @@ int main() {
 	dfs(tree, tree->root);
 	std::cout << "maximum: " << rb_maximum(tree->root)->data << std::endl;
 	std::cout << "minimun: " << rb_minimum(tree->root)->data << std::endl;
+	std::cout << "afterdelete:" << std::endl;
+	rb_delete(tree, rb_find(tree, tree->root, 11));
+	dfs(tree, tree->root);
+	destory(tree);
 }
 

@@ -46,6 +46,12 @@ void rb_delete(rbt *tree, rbt_n *node);
 rbt_n* rb_maximum(rbt_n *root);
 // Return minimum of tree
 rbt_n* rb_minimum(rbt_n *root);
-
+// Find the element, and return pointer to the node
+rbt_n* rb_find(rbt *tree, rbt_n *root, int data);
+// Delete fixup
 void rb_delete_fixup(rbt *tree, rbt_n *fixNode);
+
+void destory(rbt *tree);
+
+void destory(rbt_n *node);
 #endif // !REDBLACKTREE_H_
