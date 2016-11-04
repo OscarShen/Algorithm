@@ -1,4 +1,5 @@
-#include "RedBlackTree.h"
+#include "PersistentTree.h"
+
 PersistentNode* PersistentTree::nil;
 
 PersistentTree::PersistentTree()
@@ -213,7 +214,7 @@ void rb_delete_fixup(rbt * tree, rbt_n * fixNode)
 					right_rotate(tree, brother);
 					brother = fixNode->parent->right;
 				} // Now brother's right child must be red, in case 4
-				// still left needs a black
+				  // still left needs a black
 				brother->color = RBColor::RED;
 				brother->parent->color = RBColor::BLACK;
 				left_rotate(tree, brother->parent);

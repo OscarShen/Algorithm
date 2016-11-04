@@ -1,7 +1,6 @@
 #pragma once
-#ifndef REDBLACKTREE_H_
-#define REDBLACKTREE_H_
-
+#ifndef PERSISTENTTREE_H_
+#define PERSISTENTTREE_H_
 #define INT_MAX 2147483647 // Max integer
 
 enum RBColor
@@ -25,9 +24,11 @@ typedef struct PersistentNode
 	PersistentNode *left;
 	PersistentNode *right;
 	RBColor color;
-	PersistentNode(int data, PersistentNode *parent, PersistentNode *left, 
-		PersistentNode *right, RBColor color=RBColor::RED ) :data(data), color(color), parent(parent),
+	PersistentNode(int data, PersistentNode *parent, PersistentNode *left,
+		PersistentNode *right, RBColor color = RBColor::RED) :data(data), color(color), parent(parent),
 		left(left), right(right) {}
+	PersistentNode(PersistentNode &node);
+	PersistentNode* operator=(PersistentNode &rhs);
 }rbt_n;
 
 
@@ -55,4 +56,5 @@ void rb_delete_fixup(rbt *tree, rbt_n *fixNode);
 void destory(rbt *tree);
 // delete node
 void destory(rbt_n *node);
-#endif // !REDBLACKTREE_H_
+
+#endif // !PERSISTENTTREE_H_
