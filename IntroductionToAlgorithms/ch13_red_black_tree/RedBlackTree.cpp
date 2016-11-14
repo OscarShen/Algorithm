@@ -1,13 +1,13 @@
 #include "RedBlackTree.h"
-PersistentNode* PersistentTree::nil;
+RedBlackNode* RedBlackTree::nil;
 
-PersistentTree::PersistentTree()
+RedBlackTree::RedBlackTree()
 {
-	PersistentTree::nil = new PersistentNode(INT_MAX, nullptr, nullptr, nullptr, RBColor::BLACK);
-	root = PersistentTree::nil;
+	RedBlackTree::nil = new RedBlackNode(INT_MAX, nullptr, nullptr, nullptr, RBColor::BLACK);
+	root = RedBlackTree::nil;
 }
 
-PersistentTree::~PersistentTree()
+RedBlackTree::~RedBlackTree()
 {
 	destory(this);
 }

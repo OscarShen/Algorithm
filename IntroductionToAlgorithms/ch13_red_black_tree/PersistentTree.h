@@ -8,27 +8,27 @@ enum RBColor
 	RED,
 	BLACK
 };
-struct PersistentNode;
-typedef struct PersistentTree
+struct RedBlackNode;
+typedef struct RedBlackTree
 {
-	static PersistentNode *nil;
-	PersistentNode *root;
-	PersistentTree();
-	~PersistentTree();
+	static RedBlackNode *nil;
+	RedBlackNode *root;
+	RedBlackTree();
+	~RedBlackTree();
 }rbt;
 
-typedef struct PersistentNode
+typedef struct RedBlackNode
 {
 	int data;
-	PersistentNode *parent;
-	PersistentNode *left;
-	PersistentNode *right;
+	RedBlackNode *parent;
+	RedBlackNode *left;
+	RedBlackNode *right;
 	RBColor color;
-	PersistentNode(int data, PersistentNode *parent, PersistentNode *left,
-		PersistentNode *right, RBColor color = RBColor::RED) :data(data), color(color), parent(parent),
+	RedBlackNode(int data, RedBlackNode *parent, RedBlackNode *left,
+		RedBlackNode *right, RBColor color = RBColor::RED) :data(data), color(color), parent(parent),
 		left(left), right(right) {}
-	PersistentNode(PersistentNode &node);
-	PersistentNode* operator=(PersistentNode &rhs);
+	RedBlackNode(RedBlackNode &node);
+	RedBlackNode* operator=(RedBlackNode &rhs);
 }rbt_n;
 
 
