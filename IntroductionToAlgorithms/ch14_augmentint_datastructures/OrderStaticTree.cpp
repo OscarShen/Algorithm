@@ -308,6 +308,18 @@ ost_n * os_select(ost_n * node, int k)
 		return os_select(node->right, k - size);
 }
 
+int os_rank(ost * tree, ost_n * node)
+{
+	int res = node->left->size + 1;
+	ost_n *tmp = node;
+	while (tmp != tree->root) {
+		if (tmp = tmp->parent->right) // If tmp is right child of parent
+			res += tmp->parent->left->size + 1; // Now plus whole left child-tree's sieze and one from parent
+		tmp = tmp->parent;
+	}
+	return res;
+}
+
 void dfs(ost *tree, ost_n *root) {
 	if (root == ost::nil)
 		return;
